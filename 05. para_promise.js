@@ -5,7 +5,6 @@ const processJob = (seconds) => {
 
     setTimeout(() => {
       const result = `finished ${seconds}`
-      console.log(result)
       resolve(result)
     }, seconds * 1000)
   })
@@ -13,13 +12,15 @@ const processJob = (seconds) => {
 
 const mainFunc = () => {
   console.time()
-  
-  Promise.all([processJob(5), processJob(10), processJob(3)]).then(
-    (results) => {
-      console.log(results)
-      console.timeEnd()
-    }
-  )
+
+  const arr = [5, 10, 3].map((seconds) => {
+    return processJob(seconds)
+  })
+
+  Promise.all(arr).then((results) => {
+    console.log(results)
+    console.timeEnd()
+  })
 }
 
 mainFunc()
