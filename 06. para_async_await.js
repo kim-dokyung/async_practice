@@ -11,13 +11,13 @@ const processJob = (seconds) => {
 }
 
 const mainFunc = async () => {
-  console.time()
+  console.time('main function')
 
   const arr = [5, 10, 3].map((seconds) => processJob(seconds))
 
   const results = await Promise.all(arr)
   console.log(results)
-  console.timeEnd()
+  console.timeEnd('main function')
 }
 
 mainFunc()

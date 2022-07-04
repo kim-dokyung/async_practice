@@ -14,7 +14,7 @@ const processJob = (seconds, callback) => {
 }
 
 const mainFunc = () => {
-  console.time()
+  console.time('main function')
 
   async.parallel(
     [
@@ -26,7 +26,7 @@ const mainFunc = () => {
       if (err) throw err
 
       console.log(results)
-      console.timeEnd()
+      console.timeEnd('main function')
     }
   )
 }

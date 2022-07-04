@@ -12,7 +12,7 @@ const processJob = (seconds) => {
 }
 
 const mainFunc = async () => {
-  console.time()
+  console.time('main function')
   try {
     const res5 = await processJob(5)
     console.log(res5)
@@ -24,7 +24,7 @@ const mainFunc = async () => {
     console.log(err)
   }
 
-  console.timeEnd()
+  console.timeEnd('main function')
 }
 
 mainFunc()

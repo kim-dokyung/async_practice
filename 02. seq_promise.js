@@ -12,7 +12,7 @@ const processJob = (seconds) => {
 }
 
 const mainFunc = () => {
-  console.time()
+  console.time('main function')
   processJob(5)
     .then((result) => {
       console.log(result)
@@ -24,7 +24,7 @@ const mainFunc = () => {
     })
     .then((result) => {
       console.log(result)
-      console.timeEnd()
+      console.timeEnd('main function')
     })
     .catch((err) => {
       alert(err)

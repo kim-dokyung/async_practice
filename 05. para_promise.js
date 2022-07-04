@@ -11,7 +11,7 @@ const processJob = (seconds) => {
 }
 
 const mainFunc = () => {
-  console.time()
+  console.time('main function')
 
   const arr = [5, 10, 3].map((seconds) => {
     return processJob(seconds)
@@ -19,7 +19,7 @@ const mainFunc = () => {
 
   Promise.all(arr).then((results) => {
     console.log(results)
-    console.timeEnd()
+    console.timeEnd('main function')
   })
 }
 
