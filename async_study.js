@@ -1,21 +1,39 @@
-const processJob = (seconds) => {
-	return new Promise((resolve, reject) => {
-  	setTimeout(() => {
-			console.log(`finished ${seconds}`)
-			resolve()
-    }, 
-      seconds * 1000
-    )
-  })
-    
+import async from "async"
+
+const processJob = (seconds, callback) => {
+  if (typeof seconds !== "number") {
+    reject(new Error("Seconds argument has to be number type."))
+  }
+
+  setTimeout(function () {
+    callback(null, `finished ${seconds}`)
+  }, seconds * 1000)
 }
 
-const mainFunc = async () => {
-	console.time()
-	await Promise.all([processJob(5), processJob(10), processJob(3)])
-	console.timeEnd()
+const mainFunc = () => {
+  console.time("main function")
+
+  async.waterfall(
+    [
+      (cb) => {
+        processJob(5, cb)
+      },
+      (data, cb) => {
+        console.log(data)
+        processJob(10, cb)
+      },
+      (data, cb) => {
+        console.log(data)
+        processJob(3, cb)
+      },
+    ],
+    (err, data) => {
+      if (err) throw err
+
+      console.log(data)
+      console.timeEnd("main function")
+    }
+  )
 }
- 
+
 mainFunc()
-
-// default: 10001.01611328125 ms

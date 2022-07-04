@@ -1,17 +1,13 @@
 import async from "async"
 
 const processJob = (seconds, callback) => {
-  // (밖에서 bind로 전달해준 데이터, 이전 task가 전달해준 데이터, callback)
+  if (typeof seconds !== "number") {
+    reject(new Error("Seconds argument has to be number type."))
+  }
+
   setTimeout(function () {
-    callback(null, `${seconds} done.`)
+    callback(null, `finished ${seconds}`)
   }, seconds * 1000)
-}
-
-const callbackFunc = (err, results) => {
-  if (err) throw err
-
-  console.log(results)
-  console.timeEnd("main function")
 }
 
 const mainFunc = () => {
@@ -19,16 +15,22 @@ const mainFunc = () => {
 
   async.waterfall(
     [
-      (callback) => {
-        callback(null, 5)
+      (cb) => {
+        processJob(5, cb)
       },
-      processJob.bind(null, 10),
-      processJob.bind(null, 3),
+      (data, cb) => {
+        console.log(data)
+        processJob(10, cb)
+      },
+      (data, cb) => {
+        console.log(data)
+        processJob(3, cb)
+      },
     ],
-    (err, results) => {
+    (err, data) => {
       if (err) throw err
 
-      console.log(results)
+      console.log(data)
       console.timeEnd("main function")
     }
   )
