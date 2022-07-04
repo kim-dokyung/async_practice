@@ -8,23 +8,26 @@ const processJob = (seconds, callback) => {
 
   setTimeout(function () {
     const data = `finished ${seconds}`
+    console.log(data)
     callback(null, data)
   }, seconds * 1000)
-}
-
-const callbackFunc = (err, results) => {
-  if (err) throw err
-
-  console.log(results)
-  console.timeEnd()
 }
 
 const mainFunc = () => {
   console.time()
 
   async.parallel(
-    [processJob(5), processJob.bind(null, 10), processJob.bind(null, 3)],
-    callbackFunc
+    [
+      (cb) => processJob(5, cb),
+      (cb) => processJob(10, cb),
+      (cb) => processJob(3, cb),
+    ],
+    (err, results) => {
+      if (err) throw err
+
+      console.log(results)
+      console.timeEnd()
+    }
   )
 }
 
